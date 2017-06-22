@@ -21,7 +21,9 @@
         function createChart() {
 
             $('#container').highcharts('StockChart', {
-                
+                legend: {
+                    enabled: true
+                },
                 rangeSelector: {
                     allButtonsEnabled: true,
                     buttons: [{
@@ -68,13 +70,6 @@
                         type: 'day',
                         count: 30,
                         text: '1m',
-                        dataGrouping: {
-                            forced: true,
-                            units: [['hour', [12]]]
-                        }
-                    }, {
-                        type: 'all',
-                        text: 'all',
                         dataGrouping: {
                             forced: true,
                             units: [['hour', [12]]]
@@ -130,7 +125,7 @@
         $.each(names, function (i, name) {
             var id = @Model.Item.Id;
             var host = '@WebSettings.Settings.DataHost';
-            $.getJSON(location.protocol + '//@(Request.Url.HostName)/data/item/'+ name.name.toLowerCase() +'/' +id, function (data) {
+            $.getJSON(location.protocol + '//@(Request.Url.HostName)/data/item/' + name.name.toLowerCase() + '/' + id, function (data) {
                 var series = {};
                 if (name.type === 1) {
                     var color = '#44A5FF';
@@ -138,35 +133,59 @@
                         color = '#939393';
                     }
                     series =
-                    {
-                        name: name.name,
-                        yAxis: 1,
-                        data: data.Data,
-                        type: 'column',
-                        zIndex: 1,
-                        color : color
-                    };
+                        {
+                            name: name.name,
+                            yAxis: 1,
+                            data: data.Data,
+                            type: 'column',
+                            zIndex: 1,
+                            color: color
+                        };
                 } else {
                     var color = '#32C922';
                     if (name.name === 'Sell') {
                         color = '#FF3D23';
                     }
                     series =
-                    {
-                        name: name.name,
-                        data: data.Data,
-                        type: 'line',
-                        zIndex: 2,
-                        color : color
-                    };
+                        {
+                            name: name.name,
+                            data: data.Data,
+                            type: 'line',
+                            zIndex: 2,
+                            color: color
+                        };
                 }
-                
-                seriesOptions[i] = series;  
+
+                seriesOptions[seriesCounter] = series;
                 // As we're loading the data asynchronously, we don't know what order it will arrive. So
                 // we keep a counter and create the chart when all the data is loaded.
                 seriesCounter += 1;
 
-                if (seriesCounter === names.length) {
+                if (seriesCounter == 4)
+                {
+                    series =
+                    {
+                        name: 'Flags',
+                        type: 'flags',
+                        data: [{
+                            x: 1496135940000,
+                            title: 'Open Beta Start (0.5.2)'
+                        }, {
+                            x: 1497164400000,
+                            title: 'Update 0.6.0'
+                        }, {
+                            x: 1497953880000,
+                            title: 'Update 0.7.0'
+                        }],
+                        zIndex: 3,
+                        shape: 'flag',
+                        color: '#FF8C00'
+                    };
+                    seriesOptions[seriesCounter] = series;
+                    seriesCounter += 1;
+                }
+
+                if (seriesCounter === names.length + 1) {
                     createChart();
                 }
             });
