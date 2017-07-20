@@ -60,13 +60,24 @@
             </tbody>
         </table>
     </div>
-
-    <div class="panel panel-default">
-        <div class="panel-body">
-            @Html.Partial("filter", Model)
+</div>
+<div class="container-fluid">
+    <div class="col-sm-8 no-padding-left">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @Html.Partial("filter", Model)
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 no-padding-right">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                Ad Space
+            </div>
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
 
