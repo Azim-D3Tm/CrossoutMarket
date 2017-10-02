@@ -60,11 +60,17 @@ namespace Crossout.Model.Recipes
         [JsonProperty("sumSell")]
         public decimal SumSell { get; set; }
 
+        [JsonProperty("surfaceProfit")]
+        public decimal SurfaceProfit { get; set; }
+
         [JsonProperty("sumBuyFormat")]
         public string SumBuyFormat => PriceFormatter.FormatPrice(SumBuy);
 
         [JsonProperty("sumSellFormat")]
         public string SumSellFormat => PriceFormatter.FormatPrice(SumSell);
+
+        [JsonProperty("surfaceProfitFormat")]
+        public string SurfaceProfitFormat => PriceFormatter.FormatPrice(SurfaceProfit);
 
         [JsonProperty("buyPriceTimesNumber")]
         public decimal BuyPriceTimesNumber => CalculatePriceByNumber(Item.BuyPrice, Number, Item.Id);

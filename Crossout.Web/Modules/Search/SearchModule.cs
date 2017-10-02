@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Crossout.Model.Items;
 using Crossout.Web.Models;
 using Crossout.Web.Models.Filter;
+using Crossout.Web.Models.Items;
 using Crossout.Web.Models.General;
 using Crossout.Web.Models.Pagination;
 using Crossout.Web.Services;
@@ -129,11 +130,13 @@ namespace Crossout.Web.Modules.Search
             int maxPages = (int)Math.Ceiling(count / (float)entriesPerPage);
 
             var ds = sql.SelectDataSet(sqlQuery, parmeter);
-            var searchResult = new List<Item>();
+            var searchResult = new List<ItemModel>();
             foreach (var row in ds)
             {
-                Item item = Item.Create(row);
-                CrossoutDataService.Instance.AddData(item);
+                ItemModel item = new ItemModel();
+                item.Item = Item.Create(row);
+                CrossoutDataService.Instance.AddData(item.Item);
+                item.Recipe = db.SelectRecipeModel(item.Item, false);
                 searchResult.Add(item);
             }
             //  CurrentPage = page, MaxRows = count, MaxPages = maxPages

@@ -1,60 +1,62 @@
 ﻿@using System.Linq
 @using Crossout.Web
-@using Crossout.Model.Items;
-@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Crossout.Model.Items.Item>
-<tr class="selected-row" data-id="@Model.Id">
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Crossout.Web.Models.Items.ItemModel>
+<tr class="selected-row" data-id="@Model.Item.Id">
     <td>
         <div class="clearfix content-heading">
             <div>
-                @if (RootPathHelper.ImageExists(@Model.Image))
+                @if (RootPathHelper.ImageExists(@Model.Item.Image))
                 {
-                    <a href="~/item/@Model.Id">
-                        <img class="pull-left item-image-search" style="margin-right: 8px;" src="~/img/items/@Model.Image"/>
+                    <a href="~/item/@Model.Item.Id">
+                        <img class="pull-left item-image-search" style="margin-right: 8px;" src="~/img/items/@Model.Item.Image"/>
                     </a>
                 }
                 else
                 {
-                    <a href="~/item/@Model.Id">
+                    <a href="~/item/@Model.Item.Id">
                         <img class="pull-left item-image-search" style="margin-right: 8px;" src="~/img/NoImage.png" />
                     </a>
                 }
             </div>
             <div>
-                <a href="~/item/@Model.Id"><h4 class="item-title @(Model.Removed > 0 ? "item-removed" : "")">@Model.Name @(Model.Removed > 0 ? "(Removed)" : "")</h4></a>
+                <a href="~/item/@Model.Item.Id"><h4 class="item-title @(Model.Item.Removed > 0 ? "item-removed" : "")">@Model.Item.Name @(Model.Item.Removed > 0 ? "(Removed)" : "")</h4></a>
                 @if(Context.CurrentUser != null && Context.CurrentUser.Claims.Contains("Admin")){ 
-                    <a href="~/edit/@Model.Id">Edit</a>
+                    <a href="~/edit/@Model.Item.Id">Edit</a>
                 }
             </div>
         </div>
     </td>
     <td>
-        <span class="label label-@Model.RarityName">@Model.RarityName</span>
+        <span class="label label-@Model.Item.RarityName">@Model.Item.RarityName</span>
     </td>
     <td>
-        <div class="label-md-left">@Model.Faction</div>
+        <div class="label-md-left">@Model.Item.Faction</div>
     </td>
     <td>
-        <div class="label-md-left">@Model.TypeName</div>
+        <div class="label-md-left">@Model.Item.TypeName</div>
     </td>
     <td>
-        <div class="label-md">@Model.Popularity</div>
+        <div class="label-md">@Model.Item.Popularity</div>
     </td>
     <td>
-        <div class="label-md">@Model.FormatSellPrice <img height="14" src="~/img/Coin.png" /></div>
+        <div class="label-md">@Model.Item.FormatSellPrice <img height="14" src="~/img/Coin.png" /></div>
     </td>
     <td>
-        <div class="label-md">@Model.SellOffers</div>
+        <div class="label-md">@Model.Item.SellOffers</div>
     </td>
     <td>
-        <div class="label-md">@Model.FormatBuyPrice <img height="14" src="~/img/Coin.png" /></div>
+        <div class="label-md">@Model.Item.FormatBuyPrice <img height="14" src="~/img/Coin.png" /></div>
     </td>
     <td>
-        <div class="label-md">@Model.BuyOrders</div>
+        <div class="label-md">@Model.Item.BuyOrders</div>
     </td>
     <td>
-        <div class="label-md">@Model.FormatMargin <img height="14" src="~/img/Coin.png" /></div>
+        <div class="label-md">@Model.Item.FormatMargin <img height="14" src="~/img/Coin.png" /></div>
     </td>
     <td>
-        <div class="label-md item-timestamp @(Model.OlderThan(5) ? "item-older-than-5" : "") @(Model.OlderThan(60) ? "item-older-than-60" : "")">@Model.LastUpdateTime</div>
+        <div class="label-md">@Model.Recipe.Recipe.SurfaceProfitFormat <img height="14" src="~/img/Coin.png" /></div>
+    </td>
+    <td>
+        <div class="label-md item-timestamp @(Model.Item.OlderThan(5) ? "item-older-than-5" : "") @(Model.Item.OlderThan(60) ? "item-older-than-60" : "")">@Model.Item.LastUpdateTime</div>
     </td>
 </tr>

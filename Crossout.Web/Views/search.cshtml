@@ -4,7 +4,7 @@
 
 @using Crossout.Model.Items
 @using Crossout.Web
-@using Crossout.Web.Models
+@using Crossout.Web.Models.Items
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<Crossout.Web.Models.General.SearchModel>
 
 
@@ -70,13 +70,16 @@
                         Margin
                     </th>
                     <th class="text-right">
+                        Crafting Profit
+                    </th>
+                    <th class="text-right">
                         Last Update
                     </th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach (Item item in Model.SearchResult)
+                @foreach (ItemModel item in Model.SearchResult)
                 {
                     @Html.Partial("itempart", item)
                 }

@@ -188,6 +188,7 @@ namespace Crossout.Web.Services
         {
             item.SumBuy = item.Ingredients.Sum(x => x.BuyPriceTimesNumber);
             item.SumSell = item.Ingredients.Sum(x => x.SellPriceTimesNumber);
+            item.SurfaceProfit = item.Item.SellPrice * Convert.ToDecimal(0.9) - item.SumBuy;
         }
 
         public List<RecipeItem> SelectRecipe(RecipeCounter counter,Item item)
